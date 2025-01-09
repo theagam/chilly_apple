@@ -12,36 +12,18 @@ import {
 import axios from 'axios';
 import CustomTextInput from '@/src/components/customText';
 import PasswordInput from '@/src/components/passwordInput';
-import { useNavigation } from '@react-navigation/native';
-import AsyncStorage from '@react-native-async-storage/async-storage'; // Import AsyncStorage
+import { NavigationProp, useNavigation } from '@react-navigation/native';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import { API_BASE_URL } from '@/src/constants';
 
-// API Base URL
-const API_BASE_URL = 'https://chillyapple.com/SN-CH-Test/api/';
 
 const LoginScreen = (props: any) => {
   const [password, setPassword] = useState('');
-  const [username, setUsername] = useState(''); // Changed from mobileNumber to username
-  const navigation = useNavigation(); // Initialize the navigation object
+  const [username, setUsername] = useState('');
+  const navigation: NavigationProp<any, any> = useNavigation();
 
-  // Function to check if the user is already logged in
-  const checkLoginStatus = async () => {
-    try {
-      const token = await AsyncStorage.getItem('userToken');
-      if (token) {
-        // If the token exists, navigate directly to the 'screens' layout
-        navigation.navigate('features', { screen: 'drawer' })
-      }
-    } catch (error) {
-      console.error('Error checking login status:', error);
-    }
-  };
 
-  useEffect(() => {
-    // Check login status when the component mounts
-    checkLoginStatus();
-  }, []);
-
-  // Function to handle login request using axios
+  //  handle login function
   const handleLogin = async () => {
     Keyboard.dismiss();
     if (!username || !password) {
@@ -62,9 +44,9 @@ const LoginScreen = (props: any) => {
         // Store the token in AsyncStorage after successful login
         const userToken = response.data.customerMaster.token;
         if (userToken) {
-          await AsyncStorage.setItem('userToken', userToken); // Correctly store the token
+          await AsyncStorage.setItem('userToken', userToken); 
           console.log("loggedIn")
-          navigation.navigate('features', { screen: 'home' });
+          navigation.navigate('features', { screen: 'header' });
         }
         
        
@@ -73,11 +55,13 @@ const LoginScreen = (props: any) => {
       } else {
         Alert.alert('Error', response.data.message || 'Login failed!');
       }
-    } catch (error) {
+    } catch (error:any) {
       Alert.alert('Error', error.response?.data?.message || 'An error occurred while logging in');
       console.error('Login error:', error);
     }
   };
+
+  
   
   return (
     <ImageBackground

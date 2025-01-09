@@ -1,26 +1,23 @@
-import { View, Text } from 'react-native'
-import React from 'react'
-import { createStackNavigator } from '@react-navigation/stack';
-import HomeScreen from './home';
-// import MyDrawer from './drawer';
-import Header from './drawer';
+import React from "react";
+import { createStackNavigator } from "@react-navigation/stack";
+import HomeScreen from "./home";
+import Headers from "./header";
 
 export default function FeaturesLayout() {
-    const Stack = createStackNavigator();
-    
+  const Stack = createStackNavigator();
+
   return (
-    <Stack.Navigator initialRouteName='drawer'>
+    <Stack.Navigator initialRouteName="header">
       <Stack.Screen
-        name="drawer"
-        component={Header}
+        name="header"
+        component={Headers}
         options={{ headerShown: false }}
       />
-    <Stack.Screen
-      name="home"
-      component={HomeScreen}
-      options={{ headerShown: false }}
-    />
-    
-  </Stack.Navigator>
-  )
+      <Stack.Screen
+        name="home"
+        component={HomeScreen}
+        options={{ headerShown: false }}
+      />
+    </Stack.Navigator>
+  );
 }
