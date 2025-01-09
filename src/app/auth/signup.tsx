@@ -7,7 +7,7 @@ import {
   Alert,
   TextInput,
 } from "react-native";
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import axios from "axios";
 import uuid from "react-native-uuid";
 import PasswordInput from "@/src/components/passwordInput";
@@ -26,6 +26,8 @@ const SignUpScreen = (props: any) => {
   const [confirmpassword, setConfirmPassword] = useState("");
   const [referralCode, setReferralCode] = useState("");
   const [isOtpValid, setIsOtpValid] = useState(false); // Tracks if OTP is valid
+  const [timer, setTimer] = useState(59); // Timer for OTP resend
+  const [isOtpSent, setIsOtpSent] = useState(false); // Tracks if OTP has been sent
 
   const navigation: NavigationProp<any, any> = useNavigation();
 
@@ -47,12 +49,28 @@ const SignUpScreen = (props: any) => {
       );
       if (response.status === 200) {
         Alert.alert("Success", "OTP Sent");
+        setIsOtpSent(true);
+        startTimer(); // Start the timer after OTP is sent
       } else {
         Alert.alert("Error", response.data.message || "Failed to send OTP");
       }
     } catch (error: any) {
       Alert.alert("Error", error.message || "Network error");
     }
+  };
+
+  // Timer countdown function
+  const startTimer = () => {
+    const intervalId = setInterval(() => {
+      setTimer((prevTimer) => {
+        if (prevTimer === 1) {
+          clearInterval(intervalId); 
+          setIsOtpSent(false); // Enable OTP resend button after countdown ends
+          return 59; // Reset the timer
+        }
+        return prevTimer - 1; // Decrease the timer by 1 every second
+      });
+    }, 1000);
   };
 
   const handleOtpChange = (value: string) => {
@@ -159,8 +177,10 @@ const SignUpScreen = (props: any) => {
               onChangeText={setMobileNumber}
               keyboardType="number-pad"
             />
-            <TouchableOpacity onPress={sendOtp}>
-              <Text style={styles.sendOtpText}>Send OTP</Text>
+            <TouchableOpacity onPress={sendOtp} disabled={isOtpSent}>
+              <Text style={styles.sendOtpText}>
+                {isOtpSent ? `Resend OTP in ${timer}s` : "Send OTP"}
+              </Text>
             </TouchableOpacity>
           </View>
           <View style={styles.inputContainer}>
@@ -171,9 +191,6 @@ const SignUpScreen = (props: any) => {
               onChangeText={handleOtpChange}
               keyboardType="number-pad"
             />
-            {/* <TouchableOpacity onPress={verifyOtp}>
-                <Text style={styles.verifyOtpText}>Verify OTP</Text>
-              </TouchableOpacity> */}
           </View>
           <PasswordInput
             label="Password"
@@ -266,10 +283,5 @@ const styles = StyleSheet.create({
   signupButtonText: {
     color: "#fff",
     fontSize: 18,
-  },
-  verifyOtpText: {
-    paddingRight: 10,
-    color: "#007BFF",
-    fontWeight: "bold",
   },
 });

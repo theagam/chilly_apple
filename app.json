@@ -1,10 +1,10 @@
 {
   "expo": {
-    "name": "chilly_apple",
-    "slug": "chilly_apple",
+    "name": "Chilly Apple",
+    "slug": "chilly",
     "version": "1.0.0",
     "orientation": "portrait",
-    "icon": "./assets/images/icon.png",
+    "icon": "./assets/images/logo.png",
     "scheme": "myapp",
     "userInterfaceStyle": "automatic",
     "newArchEnabled": true,
@@ -13,9 +13,10 @@
     },
     "android": {
       "adaptiveIcon": {
-        "foregroundImage": "./assets/images/adaptive-icon.png",
+        "foregroundImage": "./assets/images/applelogo.png",
         "backgroundColor": "#ffffff"
-      }
+      },
+      "package": "com.agamlb.chillyapple"
     },
     "web": {
       "bundler": "metro",
@@ -27,15 +28,24 @@
       [
         "expo-splash-screen",
         {
-          "image": "./assets/images/splash-icon.png",
+          "image": "./assets/images/logo.png",
           "imageWidth": 200,
           "resizeMode": "contain",
-          "backgroundColor": "#ffffff"
+          "backgroundColor": "#f8f8f8"
         }
       ]
     ],
     "experiments": {
       "typedRoutes": true
-    }
+    },
+    "extra": {
+      "router": {
+        "origin": false
+      },
+      "eas": {
+        "projectId": "b3a44541-7b35-4632-a3dd-5de0d8bb0a0c"
+      }
+    },
+    "owner": "chilly2"
   }
 }

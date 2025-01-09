@@ -142,6 +142,8 @@ const styles = StyleSheet.create({
     paddingHorizontal: 10,
     alignItems: "center",
     flex: 1,
+    height: 45,
+
   },
   flatListContent: {
     justifyContent: "center",
@@ -155,7 +157,9 @@ const styles = StyleSheet.create({
     fontSize: 16,
     color: "#000",
     fontFamily: "Lato-Regular",
+    height: 40, 
   },
+  
   logoContainer: {
     width: 70,
     height: 70,
