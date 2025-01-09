@@ -5,9 +5,9 @@ import AsyncStorage from '@react-native-async-storage/async-storage'; // Import 
 import AuthLayout from './auth/_layout';  // Your Auth layout
 import CustomSplashScreen from './auth/customSplash';
 import FeaturesLayout from './features/_layout';
-import {Stack} from "expo-router"
+// import {Stack} from "expo-router"
 
-// const Stack = createStackNavigator();
+const Stack = createStackNavigator();
 
 const RootLayout = () => {
   const [isLoggedIn, setIsLoggedIn] = useState(null); // Start with null for loading state
@@ -42,13 +42,13 @@ const RootLayout = () => {
 
   return (
     
-    <Stack screenOptions={{ headerShown: false }}>
-      {isLoggedIn ? (
-        <Stack.Screen name="features"  />
-      ) : (
-        <Stack.Screen name="auth"  />
-      )}
-    </Stack>
+    <Stack.Navigator screenOptions={{ headerShown: false }}>
+    {isLoggedIn ? (
+      <Stack.Screen name="features" component={FeaturesLayout} />
+    ) : (
+      <Stack.Screen name="auth" component={AuthLayout} />
+    )}
+  </Stack.Navigator>
   );
 };
 

@@ -9,11 +9,11 @@ const Stack = createStackNavigator();
 function AuthLayout() {
   return (
     <Stack.Navigator initialRouteName="splashScreen">
-      <Stack.Screen
+      {/* <Stack.Screen
         name="splashScreen"
         component={CustomSplashScreen}
         options={{ headerShown: false }}
-      />
+      /> */}
       <Stack.Screen
         name="login"
         component={LoginScreen}

@@ -9,7 +9,7 @@ export default function FeaturesLayout() {
     const Stack = createStackNavigator();
     
   return (
-    <Stack.Navigator >
+    <Stack.Navigator initialRouteName='drawer'>
       <Stack.Screen
         name="drawer"
         component={Header}
